@@ -26,3 +26,6 @@ Contains build logs.
 
 # 4 Purpose of entry-points console script in setup.py
 The console script connects a command name with a Python function. When ros2 run package executable is used, ROS 2 checks setup.py to determine which Python file and function should run. This allows the node to execute as a ROS 2 command.
+
+## 5 Publisher/Subscriber Diagram
+Node A (Publisher) --->(Topic)---> Node B (Subscriber)
