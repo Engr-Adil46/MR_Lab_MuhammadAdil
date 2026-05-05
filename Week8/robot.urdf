@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<robot name="tri_omni_robot">
+
+    <!-- ========== MATERIALS ========== -->
+    <material name="yellow"><color rgba="1 0.8 0.1 1"/></material>
+    <material name="black"><color rgba="0.1 0.1 0.1 1"/></material>
+    <material name="blue"><color rgba="0.1 0.3 0.8 1"/></material>
+    <material name="red"><color rgba="0.9 0.1 0.1 1"/></material>
+
+    <!-- ========== BASE (Triangular/Circular Chassis) ========== -->
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <!-- Using a cylinder to approximate the holonomic base plate -->
+                <cylinder length="0.12" radius="0.25"/>
+            </geometry>
+            <material name="yellow"/>
+        </visual>
+    </link>
+
+    <!-- ========== SPHERICAL WHEELS (120 Degrees Apart) ========== -->
+
+    <!-- WHEEL 1 (Front/Right at 0 degrees) -->
+    <link name="wheel_1">
+        <visual>
+            <geometry>
+                <sphere radius="0.08"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+    </link>
+
+    <joint name="joint_1" type="continuous">
+        <parent link="base_link"/>
+        <child link="wheel_1"/>
+        <!-- Positioned on X-axis, rotated to face tangent -->
+        <origin xyz="0.25 0 -0.05" rpy="1.57 0 1.57"/>
+        <axis xyz="0 0 1"/>
+    </joint>
+
+    <!-- WHEEL 2 (Rear Left at 120 degrees) -->
+    <link name="wheel_2">
+        <visual>
+            <geometry>
+                <sphere radius="0.08"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+    </link>
+
+    <joint name="joint_2" type="continuous">
+        <parent link="base_link"/>
+        <child link="wheel_2"/>
+        <!-- x = R*cos(120), y = R*sin(120) -->
+        <origin xyz="-0.125 0.216 -0.05" rpy="1.57 0 3.66"/>
+        <axis xyz="0 0 1"/>
+    </joint>
+
+    <!-- WHEEL 3 (Rear Right at 240 degrees) -->
+    <link name="wheel_3">
+        <visual>
+            <geometry>
+                <sphere radius="0.08"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+    </link>
+
+    <joint name="joint_3" type="continuous">
+        <parent link="base_link"/>
+        <child link="wheel_3"/>
+        <!-- x = R*cos(240), y = R*sin(240) -->
+        <origin xyz="-0.125 -0.216 -0.05" rpy="1.57 0 -0.52"/>
+        <axis xyz="0 0 1"/>
+    </joint>
+
+    <!-- ========== SENSORS ========== -->
+    <link name="lidar_link">
+        <visual>
+            <geometry>
+                <cylinder length="0.05" radius="0.06"/>
+            </geometry>
+            <material name="red"/>
+        </visual>
+    </link>
+
+    <joint name="lidar_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="lidar_link"/>
+        <origin xyz="0 0 0.1"/>
+    </joint>
+
+</robot>
